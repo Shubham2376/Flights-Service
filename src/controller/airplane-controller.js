@@ -26,6 +26,26 @@ async function createAirplane(req,res){
                 .json(ErrorResponse)
     }
 }
+
+async function getAirplanes(req,res){
+    try{
+        
+        const airplanes = await AirplaneService.getAirplanes();
+        SuccessResponse.data = airplanes;
+        return res
+                .status(StatusCodes.OK) // as we not creating anything on server we just fetch data from server so that is why status code was OK 
+                .json(SuccessResponse)
+        
+    }
+    catch(error){
+        // whatever error object that return by service we attach that and inside the error object we have status code also 
+        ErrorResponse.error = error
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponse)
+    }
+}
 module.exports = {
-    createAirplane
+    createAirplane,
+    getAirplanes
 }

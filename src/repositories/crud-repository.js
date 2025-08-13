@@ -21,55 +21,31 @@ class crudRepository{
     }
 
     async destroy(data){
-        try{
             const response = await this.model.destroy({
                 where : {
                     id : data
                 }
             });
             return response
-        }
-        catch(error){
-            Logger.error('something went wrong in crud repository : destroy');
-            return error
-        }
     }
 
     async get(data){
-        try{
-            const response = await this.model.get(data);
+            const response = await this.model.findByPk(data);
             return response
-        }
-        catch(error){
-            Logger.error('something went wrong in crud repository : get');
-            return error
-        }
     }
 
     async getAll(){
-        try{
-            const response = await this.model.getAll();
+            const response = await this.model.findAll();
             return response
-        }
-        catch(error){
-            Logger.error('something went wrong in crud repository : getAll');
-            return error
-        }
     }
 
     async update(id,data){ // data that we passing should be object i.e data->{col:value,.....}
-        try{
             const response = await this.model.update(data,{
                 where : {
                     id : id
                 }
             });
             return response
-        }
-        catch(error){
-            Logger.error('something went wrong in crud repository : update');
-            return error
-        }
     }
 }
 
