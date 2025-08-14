@@ -10,7 +10,16 @@ router.post('/',
     AirplaneMiddlewares.validateCreateRequest,
     AirplaneController.createAirplane);
 
+// It is technically refering to /api/v1/airplanes/ on get request
 router.get('/',
     AirplaneController.getAirplanes);
-  
+
+// It is technically refering to /api/v1/airplanes/:id on get request
+router.get('/:id',
+    AirplaneController.getAirplane);
+
+// It is technically refering to /api/v1/airplanes/:id on delete request
+router.delete('/:id',
+    AirplaneController.destroyAirplane);
+    
 module.exports = router

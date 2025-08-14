@@ -39,11 +39,40 @@ async function getAirplanes(){
         return airplanes;
     }
     catch(error){
-        console.log(error)
+        throw new AppError('Cannot Fetch data of all airplanes',StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+
+async function getAirplane(id){
+    try{
+        const airplane = await airplaneRepository.get(id);
+        return airplane;
+    }
+    catch(error){
+        // error have statusCode property because we coming from the AppError file
+        if(error.statusCode == StatusCodes.NOT_FOUND ){
+            throw new AppError('The airplane you requested was not present',error.statusCode)
+        }
+        // other than above error if came like sequelize was not able to connect i don't show that to send user i just say internal server error
+        throw new AppError('Cannot Fetch data of all airplanes',StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+
+async function destroyAirplane(id){
+    try{
+        const airplane = await airplaneRepository.destroy(id);
+        return airplane;
+    }
+    catch(error){
+        if(error.statusCode == StatusCodes.NOT_FOUND ){
+            throw new AppError('The airplane you requested to delete is not present',error.statusCode)
+        }
         throw new AppError('Cannot Fetch data of all airplanes',StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
 module.exports = {
     createAirplane,
     getAirplanes,
+    getAirplane,
+    destroyAirplane
 }

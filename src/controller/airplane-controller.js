@@ -26,10 +26,15 @@ async function createAirplane(req,res){
                 .json(ErrorResponse)
     }
 }
-
+/**
+ * if you get all the Airplanes how the API looks like 
+ * the API looks like this 
+ * it will be the GET request : /airplanes
+ * req-body -> {}
+ */
 async function getAirplanes(req,res){
     try{
-        
+    
         const airplanes = await AirplaneService.getAirplanes();
         SuccessResponse.data = airplanes;
         return res
@@ -45,7 +50,55 @@ async function getAirplanes(req,res){
                 .json(ErrorResponse)
     }
 }
+/**
+ * if you get the Airplane of particular id how the API looks like 
+ * the API looks like this 
+ * it will be the GET request : /airplanes/:id
+ * req-body -> {}
+ */
+async function getAirplane(req,res){
+    try{
+        
+        const airplanes = await AirplaneService.getAirplane(req.params.id);
+        SuccessResponse.data = airplanes;
+        console.log("hi")
+        return res
+               .status(StatusCodes.OK)
+               .json(SuccessResponse)
+    }
+    catch(error){
+        ErrorResponse.error = error
+        return res
+               .status(error.statusCode)
+               .json(ErrorResponse)
+    }
+}
+/**
+ * if you delete the Airplane of particular id how the API looks like 
+ * the API looks like this 
+ * it will be the delete request : /airplanes/:id
+ * req-body -> {}
+ */
+async function destroyAirplane(req,res){
+    try{
+        
+        const airplanes = await AirplaneService.destroyAirplane(req.params.id);
+        SuccessResponse.data = airplanes;
+        return res
+               .status(StatusCodes.OK)
+               .json(SuccessResponse)
+    }
+    catch(error){
+        ErrorResponse.error = error
+        return res
+               .status(error.statusCode)
+               .json(ErrorResponse)
+    }
+}
+
 module.exports = {
     createAirplane,
-    getAirplanes
+    getAirplanes,
+    getAirplane,
+    destroyAirplane
 }
