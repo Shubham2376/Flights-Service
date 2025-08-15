@@ -29,6 +29,7 @@ async function createAirplane(data){
             console.log(explanation);
             throw new AppError(explanation,StatusCodes.BAD_REQUEST);
         }
+         // If anything else happen e.g you can’t able to connect with database, etc then the internal server then this line is for that 
         throw new AppError('Cannot Create a new Airplane object',StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
@@ -67,6 +68,7 @@ async function destroyAirplane(id){
         if(error.statusCode == StatusCodes.NOT_FOUND ){
             throw new AppError('The airplane you requested to delete is not present',error.statusCode)
         }
+        
         throw new AppError('Cannot Fetch data of all airplanes',StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
