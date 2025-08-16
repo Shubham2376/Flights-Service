@@ -4,7 +4,7 @@ const AppError = require("../utils/errors/app-error");
 
 const cityRepository = new CityRepository(); // we make an CityRepository
 
-async  function createCity(data){
+async function createCity(data){
      try{
         console.log("Inside Services") 
         const city = await cityRepository.create(data);
@@ -17,7 +17,7 @@ async  function createCity(data){
             error.errors.forEach((err) => {
                 explanation.push(err.message);
             });
-            console.log(explanation);
+            //console.log(explanation);
             throw new AppError(explanation,StatusCodes.BAD_REQUEST);
         }
         // If anything else happen e.g you can’t able to connect with database, etc then the internal server then this line is for that 

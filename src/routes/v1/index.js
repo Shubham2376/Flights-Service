@@ -1,11 +1,11 @@
 // we are going to register the express router
 // This is router for v1
 
-
+const express = require('express');
 const {infoController} = require('../../controller')
 const airplaneroutes = require('./airplane-routes');
 const cityroutes = require('./city-routes')
-const express = require('express');
+
 const router = express.Router();
 // router.get('/info',(req,res)=>{
 //     res.json({"msg" : "OK"})
