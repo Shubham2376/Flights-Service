@@ -12,10 +12,37 @@ app.use(express.urlencoded({extended:true}));
 // if incoming url starts with /api we going to bind it with apiRoutes router object 
 app.use('/api',apiRoutes); //i am going to register /api
 
-app.listen(serverConfig.PORT,()=>{
+app.listen(serverConfig.PORT,async ()=>{
     console.log(`Successfully start the server on PORT : ${serverConfig.PORT}`)
     // here we pass info level we can pass level as warning,error
     // we have to pass message,label,timestamp
     Logger.info("Successfully started the server","root",{})
-})
+
+    // Bad Code Alert!!!!!!!!! 
+    const {Airport,City} = require('./models');
+    //const city = await City.findByPk(1);
+    // const airport = await Airport.create({name : 'Kampegoda Airport',code : 'BLR',cityId : 1});
+    // console.log(airport);
+    // const airport = await city.createAirport({name : 'Kempegowda Airport',code : 'BLR'});
+    // console.log(airport);
+    // const airportsInBlr = await city.getAirports();
+    // console.log(airportsInBlr);
+    // const hbAirport = await Airport.findByPk(7);
+    // await city.removeAirports(hbAirport)
+
+    // await City.destroy({
+    //     where : {
+    //         id : 1
+    //     }
+    // });
+
+    // const city = await City.findByPk(13);
+    // await city.createAirport({name : 'Indore Airport',code : 'IND'});
+
+    await City.destroy({
+        where : {
+            id : 13
+        }
+    })
+});
 
