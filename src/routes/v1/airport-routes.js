@@ -16,7 +16,7 @@ router.get('/',
 
 // It is technically refering to /api/v1/airplanes/:id on get request
 router.get('/:id',
-    AirportController.getAirports);
+    AirportController.getAirport);
 
 // It is technically refering to /api/v1/airplanes/:id on delete request
 router.delete('/:id',
