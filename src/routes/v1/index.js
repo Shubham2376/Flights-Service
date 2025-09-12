@@ -6,6 +6,7 @@ const {infoController} = require('../../controller')
 const airplaneroutes = require('./airplane-routes');
 const cityroutes = require('./city-routes')
 const airportroutes = require('./airport-routes');
+const flightroutes = require('./flight-routes')
 
 const router = express.Router();
 // router.get('/info',(req,res)=>{
@@ -18,4 +19,5 @@ router.get('/info',infoController.info); //Here we do registration using Router 
 router.use('/airplanes',airplaneroutes); // if anyone give you routes which start with /airplanes you mount your airplaneroutes here
 router.use('/cities',cityroutes);
 router.use('/airports',airportroutes);
+router.use('/flights',flightroutes);
 module.exports = router; // we can export this router object anywhere
