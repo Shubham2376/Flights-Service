@@ -27,18 +27,21 @@ async function createFlight(data){
 }
 
 async function getAllFlights(query){
+    let endingTripDate = " 23:59:00";
     let customFilter = {};
+    let sortFilter = [];
     // Now we make our own custom filter
     // 1st filter- trips : MUM-DEL
     if(query.trips){
         
-        [departureAirportId,arrivalAirportId] = query.trips.split("-");
+        [departureAirportId,arrivalAirportId] = query.trips.split("-"); //destructing we do here 
         customFilter.departureAirportId = departureAirportId;
         customFilter.arrivalAirportId =arrivalAirportId;
         //console.log(customFilter)
     }
     if(query.price){
         [minPrice,maxPrice] = query.price.split("-");
+        // we use sequelize operator for mentionining that flight should be in this range 
         customFilter.price = {
             [Op.between] : [minPrice,((maxPrice == undefined) ? 20000 : maxPrice)]
         }
@@ -48,9 +51,19 @@ async function getAllFlights(query){
             [Op.gte] : query.travellers
         }
     }
-    
+    if(query.tripDate){
+        customFilter.departureTime = {
+            [Op.between] : [query.tripDate,query.tripDate + endingTripDate]
+        }
+    }
+    if(query.sort){
+        const params = query.sort.split(','); //It returns the array of params 
+        const sortFilters = params.map((param)=>param.split('_')); //we further split each params based on _
+        // const sortFilter = [] -> this we declare above
+        sortFilter = sortFilters;
+    }
     try{
-        const flights = await flightRepository.getAllFlights(customFilter);
+        const flights = await flightRepository.getAllFlights(customFilter,sortFilter);
         return flights;
     }
     catch(error){
