@@ -39,10 +39,10 @@ app.listen(serverConfig.PORT,async ()=>{
     // const city = await City.findByPk(13);
     // await city.createAirport({name : 'Indore Airport',code : 'IND'});
 
-    await City.destroy({
-        where : {
-            id : 13
-        }
-    })
+    // await City.destroy({
+    //     where : {
+    //         id : 13
+    //     }
+    // })
 });
 

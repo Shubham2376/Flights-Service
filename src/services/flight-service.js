@@ -70,7 +70,36 @@ async function getAllFlights(query){
         throw new AppError('Cannot Fetch data of all flights',StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
+
+async function getFlight(id){
+    // we take id which is flight id we do most of the stuff using this flight id 
+    try{
+        const flight= await flightRepository.get(id);
+        return flight;
+    }
+    catch(error){
+        // error have statusCode property because we coming from the AppError file
+        if(error.statusCode == StatusCodes.NOT_FOUND ){
+            throw new AppError('The airport you requested was not present',error.statusCode)
+        }
+        // other than above error if came like sequelize was not able to connect i don't show that to send user i just say internal server error
+        throw new AppError('Cannot Fetch data of all airplanes',StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+
+async function updateSeats(data){
+    try{
+        const response = await flightRepository.updateRemainingSeats(data.flightId,data.seats,data.dec);
+        return response;
+    }
+    catch(Error){
+        console.log(Error);
+        throw new AppError('Cannot update the seats',StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 module.exports = {
     createFlight,
-    getAllFlights
+    getAllFlights,
+    getFlight,
+    updateSeats
 }
